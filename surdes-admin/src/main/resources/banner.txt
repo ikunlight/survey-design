@@ -1,0 +1,4 @@
+Application Version: ${surdes.version}
+Spring Boot Version: ${spring-boot.version}
+RuoYi Version: ${surdes.ruoyi-version}
+项目启动中 ...
