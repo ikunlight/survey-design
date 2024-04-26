@@ -1,68 +1,106 @@
 <template>
   <div class="app-container">
     <div class="de-main">
-        <div class="s-box">
-          <h2 class="s-title">{{ survey.surveyName }}</h2>
-          <div class="s-desc">
-            {{ survey.surveyDesc }}
-          </div>
-        </div>
-        <div class="s-quesitions">
-          <Question 
-            v-for="(question, i) in questionList" 
-            :question="question" 
-            :surveyId="surveyId" 
-            :index="i"
-            :key="question.questionNo"/>
-        </div>
-
-        <div class="s-btn">
-          <el-button type="primary" disabled>提交</el-button>
-          <!-- <el-button type="primary" plain disabled>暂存</el-button> -->
+      <div class="s-box">
+        <h2 class="s-title">{{ survey.surveyName }}</h2>
+        <div class="s-desc">
+          {{ survey.surveyDesc }}
         </div>
       </div>
-      <el-backtop target=".app-container .de-main"></el-backtop>
+      <div id="pdfDom">
+        <div class="s-quesitions">
+          <Question
+            v-for="(question, i) in questionList"
+            :question="question"
+            :surveyId="surveyId"
+            :index="i"
+            :key="question.questionNo"
+          />
+        </div>
+      </div>
+      <div class="s-btn">
+        <el-button type="primary" @click="getPdf()">下载</el-button>
+        <!-- <el-button type="primary" plain disabled>暂存</el-button> -->
+      </div>
+    </div>
+    <el-backtop target=".app-container .de-main"></el-backtop>
   </div>
 </template>
 <script>
 import Question from './question/question_view';
 import { getSurvey } from "@/api/survey/survey";
 import { listBySurveyId } from "@/api/survey/question";
+import html2Canvas from 'html2canvas'
+import JsPDF from 'jspdf'
+
 export default {
   name: 'Preview',
   // dicts: [],
   components: { Question },
-  data(){
+  data() {
     return {
       surveyId: this.$route.query.surveyId,
       survey: {},
       questionList: [],
     }
   },
-  mounted(){
-    this.getSurvey();
-    this.getQuestionList();
+  mounted() {
+    this.getSurvey()
+    this.getQuestionList()
   },
-  methods:{
+  methods: {
     /** 获取问卷对象 */
-    getSurvey(){
+    getSurvey() {
       getSurvey(this.surveyId).then(response => {
-        this.survey = response.data;
-      });
-    },
-    /** 获取问题列表 */
-    getQuestionList(){
-      listBySurveyId(this.surveyId).then(response => {
-        this.questionList = response.data;
+        this.survey = response.data
       })
     },
+    /** 获取问题列表 */
+    getQuestionList() {
+      listBySurveyId(this.surveyId).then(response => {
+        this.questionList = response.data
+      })
+    },
+    getPdf() {
+      let title = this.survey.surveyName  //DPF标题
+      html2Canvas(document.querySelector('#pdfDom'), {
+        allowTaint: true, taintTest: false, useCORS: true, y: 72, // 对Y轴进行裁切
+        // width:1200,
+        // height:5000,
+        dpi: window.devicePixelRatio * 4, //将分辨率提高到特定的DPI 提高四倍
+        scale: 4 //按比例增加分辨率
+      }).then(function(canvas) {
+        let contentWidth = canvas.width
+        let contentHeight = canvas.height
+        let pageHeight = contentWidth / 592.28 * 841.89
+        let leftHeight = contentHeight
+        let position = 0
+        let imgWidth = 595.28
+        let imgHeight = 592.28 / contentWidth * contentHeight
+        let pageData = canvas.toDataURL('image/jpeg', 1.0)
+        let PDF = new JsPDF('', 'pt', 'a4')
+        if (leftHeight < pageHeight) {
+          PDF.addImage(pageData, 'JPEG', 0, 80, imgWidth, imgHeight)
+        } else {
+          while (leftHeight > 0) {
+            PDF.addImage(pageData, 'JPEG', 0, position + 80, imgWidth, imgHeight)
+            leftHeight -= pageHeight
+            position -= 841.89
+            if (leftHeight > 0) {
+              PDF.addPage()
+            }
+          }
+        }
+        PDF.save(title + '.pdf')
+      })
+    }
   }
 }
 </script>
 <style scoped>
 .app-container{
   background: #f0f0f0;
-  
+
 }
 .de-main{
   background:  #fff;
