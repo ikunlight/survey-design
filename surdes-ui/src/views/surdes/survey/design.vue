@@ -56,21 +56,21 @@
 		    				<i class="el-icon-yulan"></i>
 		    			</div>
 	    			</el-tooltip>
-	    			<el-tooltip class="item" effect="dark" content="发布" placement="right">
-		    			<div class="card-item fabu">
-		    				<i class="el-icon-fabu"></i>
-		    			</div>
-	    			</el-tooltip>
-	    			<el-tooltip class="item" effect="dark" content="设置逻辑" placement="right">
-		    			<div class="card-item luoji">
-		    				<i class="el-icon-luoji1"></i>
-		    			</div>
-	    			</el-tooltip>
-	    			<el-tooltip class="item" effect="dark" content="设置计算" placement="right">
-		    			<div class="card-item jisuan">
-		    				<i class="el-icon-jisuanqi"></i>
-		    			</div>
-	    			</el-tooltip>
+<!--	    			<el-tooltip class="item" effect="dark" content="发布" placement="right">-->
+<!--		    			<div class="card-item fabu">-->
+<!--		    				<i class="el-icon-fabu"></i>-->
+<!--		    			</div>-->
+<!--	    			</el-tooltip>-->
+<!--	    			<el-tooltip class="item" effect="dark" content="设置逻辑" placement="right">-->
+<!--		    			<div class="card-item luoji">-->
+<!--		    				<i class="el-icon-luoji1"></i>-->
+<!--		    			</div>-->
+<!--	    			</el-tooltip>-->
+<!--	    			<el-tooltip class="item" effect="dark" content="设置计算" placement="right">-->
+<!--		    			<div class="card-item jisuan">-->
+<!--		    				<i class="el-icon-jisuanqi"></i>-->
+<!--		    			</div>-->
+<!--	    			</el-tooltip>-->
 	    		</div>
     		</div>
     	</el-col>
