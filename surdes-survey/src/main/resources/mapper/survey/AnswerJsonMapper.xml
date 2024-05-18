@@ -88,7 +88,7 @@
 
     <delete id="deleteAnswerJsonBySurveyIds" parameterType="String">
         delete from tb_answer_json where survey_id in
-        <foreach item="anId" collection="array" open="(" separator="," close=")">
+        <foreach item="surveyId" collection="surveyIds" open="(" separator="," close=")">
             #{surveyId}
         </foreach>
     </delete>

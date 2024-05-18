@@ -76,7 +76,7 @@ public interface OptionsMapper {
      * @param surveyIds 问卷主键
      * @return 结果
      */
-    int deleteOptionsBySurveyIds(Long[] surveyIds);
+    int deleteOptionsBySurveyIds(@Param("surveyIds") Long[] surveyIds);
 
     /**
      * 根据问题主键删除选项

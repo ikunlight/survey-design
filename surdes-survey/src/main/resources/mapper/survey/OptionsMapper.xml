@@ -160,9 +160,9 @@
         </foreach>
     </delete>
 
-    <delete id="deleteOptionsBySurveyIds" parameterType="String">
+    <delete id="deleteOptionsBySurveyIds" parameterType="Long">
         delete from tb_options where survey_id in
-        <foreach item="optionId" collection="array" open="(" separator="," close=")">
+        <foreach item="surveyId" collection="surveyIds" open="(" separator="," close=")">
             #{surveyId}
         </foreach>
     </delete>

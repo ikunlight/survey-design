@@ -2,6 +2,7 @@ package com.shure.surdes.survey.mapper;
 
 import com.shure.surdes.survey.domain.AnswerJson;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -75,5 +76,5 @@ public interface AnswerJsonMapper {
      * @param surveyIds
      * @return
      */
-    int deleteAnswerJsonBySurveyIds(Long[] surveyIds);
+    int deleteAnswerJsonBySurveyIds(@Param("surveyIds") Long[] surveyIds);
 }

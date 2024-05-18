@@ -183,9 +183,9 @@
         </foreach>
     </delete>
 
-    <delete id="deleteQuestionBySurveyIds" parameterType="String">
+    <delete id="deleteQuestionBySurveyIds" parameterType="Long">
         delete from tb_question where survey_id in
-        <foreach item="questionId" collection="array" open="(" separator="," close=")">
+        <foreach item="surveyId" collection="surveyIds" open="(" separator="," close=")">
             #{surveyId}
         </foreach>
     </delete>
